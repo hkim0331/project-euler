@@ -9,7 +9,9 @@ Download from https://github.com/hkim0331/project-euler.
 
 ## Usage
 
-FIXME: explanation
+問題ごとにネームスペース作って、そん中でインタラクティブに回答する。
+回答間違っていても許してね。
+みんなに見せるつもりのプログラムじゃなくて、自分自身のためにやるプロジェクト。
 
 Run the project directly:
 
