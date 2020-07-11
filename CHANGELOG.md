@@ -25,4 +25,6 @@ All notable changes to this project will be documented in this file. This change
 - Widget maker public API - `make-widget-sync`.
 
 [Unreleased]: https://github.com/hkim0331/project-euler/compare/0.1.1...HEAD
+[0.2.0]: https://github.com/hkim0331/project-euler/compare/0.1.1...0.2.0
 [0.1.1]: https://github.com/hkim0331/project-euler/compare/0.1.0...0.1.1
+
