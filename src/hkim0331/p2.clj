@@ -33,7 +33,7 @@
   (map
     first
       (iterate (fn [[a b]] [b (+ a b)])
-        [1N 2N])))
+        [1 2])))
 
 (take 10 (fibo))
 
@@ -43,3 +43,17 @@
                 (filter even? (fibo)))))
 
 (time (p2' four-million))
+
+;; how about not lazy
+
+(defn- f-aux [n xs]
+  (if (< n (first xs))
+    (rest xs)
+    (f-aux n (cons (+ (first xs) (second xs)) xs))))
+
+(defn fibo-cons [n]
+  (f-aux n '(2 1)))
+
+(time
+  (reduce +
+    (filter even? (fibo-cons 4000000))))
