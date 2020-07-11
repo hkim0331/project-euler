@@ -1,6 +1,7 @@
 # project-euler
 
-Project Euler に挑戦
+Project Euler に挑戦。
+答えだけじゃなくて、なるべく問題を解くまでのゴミプログラムも残す。
 
 ## Installation
 

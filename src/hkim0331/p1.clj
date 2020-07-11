@@ -25,4 +25,6 @@
            (zero? (rem % 5)))
       (range n)))
 
-((juxt p1 p1' p1'') 20)
+;((juxt p1 p1' p1'') 20)
+
+(reduce + (p1 1000))
