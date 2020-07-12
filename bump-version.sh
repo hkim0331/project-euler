@@ -11,5 +11,7 @@ else
   SED=/usr/bin/sed
 fi
 
-${SED} -i "s/uploader .*$/uploader \"$1\"/" project.clj
-${SED} -i "s/uploader-.+-stand/uploader-$1-stand/" run.sh
+# どこにバージョン番号を記録すればいいか？
+
+# ${SED} -i "s/uploader .*$/uploader \"$1\"/" project.clj
+# ${SED} -i "s/uploader-.+-stand/uploader-$1-stand/" run.sh
