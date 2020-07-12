@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file. This change
 ### Changed
 - Add a new arity to `make-widget-async` to provide a different widget shape.
 
+## [0.4.0] - 2020-07-12
+### added
+- answer to problem 4. largest palindrome number.
+
 ## [0.3.0] - 2020-07-12
 ### added
 - problem 3.
@@ -31,6 +35,7 @@ All notable changes to this project will be documented in this file. This change
 - Widget maker public API - `make-widget-sync`.
 
 [Unreleased]: https://github.com/hkim0331/project-euler/compare/0.1.1...HEAD
+[0.4.0]: https://github.com/hkim0331/project-euler/compare/0.3.0...0.4.0
 [0.3.0]: https://github.com/hkim0331/project-euler/compare/0.2.0...0.3.0
 [0.2.0]: https://github.com/hkim0331/project-euler/compare/0.1.1...0.2.0
 [0.1.1]: https://github.com/hkim0331/project-euler/compare/0.1.0...0.1.1

@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-1+2
+# problem 1.
 
 # Multiple of 3 and 5
 # Find the sum of all the multiples of 3 or 5 below 1000.
