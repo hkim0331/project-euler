@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file. This change
 ### Changed
 - Add a new arity to `make-widget-async` to provide a different widget shape.
 
+## 0.4.1 - 2020-07-12
+### added
+- ruby, racket version of answer to problem 4.
+
 ## [0.4.0] - 2020-07-12
 ### added
 - answer to problem 4. largest palindrome number.
