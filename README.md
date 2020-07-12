@@ -3,6 +3,9 @@
 Project Euler に挑戦。
 答えだけじゃなくて、なるべく問題を解くまでのゴミプログラムも残す。
 
+基本 Clojure だが、気が向いたら Racket、Ruby のコードも書く。
+Go? 冗談よしこさん。Haskell なら足すかなあ。
+
 ## Installation
 
 Download from https://github.com/hkim0331/project-euler.
@@ -13,25 +16,9 @@ Download from https://github.com/hkim0331/project-euler.
 回答間違っていても許してね。
 みんなに見せるつもりのプログラムじゃなくて、自分自身のためにやるプロジェクト。
 
-Run the project directly:
-
-    $ clojure -m hkim0331.project-euler
-
-Run the project's tests (they'll fail until you edit them):
-
-    $ clojure -A:test:runner
-
-Build an uberjar:
-
-    $ clojure -A:uberjar
-
-Run that uberjar:
-
-    $ java -jar project-euler.jar
-
 ## Options
 
-FIXME: listing of options this app accepts.
+...
 
 ## Examples
 
