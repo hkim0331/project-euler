@@ -7,5 +7,6 @@
 /.lein-*
 /.nrepl-history
 /.nrepl-port
-.hgignore
-.hg/
+/.hgignore
+/.hg/
+/.rebel_readline_history
