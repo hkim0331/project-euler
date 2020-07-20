@@ -1,7 +1,8 @@
-;The sum of the primes below 10 is 2 + 3 + 5 + 7 = 17.
-;Find the sum of all the primes below two million.
 (ns hkim0331.p10
   (:require [hkim0331.p7 :refer [next-prime]]))
+
+;The sum of the primes below 10 is 2 + 3 + 5 + 7 = 17.
+;Find the sum of all the primes below two million.
 
 (take 10 (iterate next-prime 2))
 
