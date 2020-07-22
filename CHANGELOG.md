@@ -2,8 +2,12 @@
 All notable changes to this project will be documented in this file. This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
-### Changed
-- Add a new arity to `make-widget-async` to provide a different widget shape.
+
+## [0.4.3] - 2020-07-22
+* problem 11, 12
+
+## - 2020-07-20
+* problem 10
 
 ## [0.4.2] - 2020-07-19
 * problem 7,8,9 in clojure
@@ -42,6 +46,7 @@ All notable changes to this project will be documented in this file. This change
 - Widget maker public API - `make-widget-sync`.
 
 [Unreleased]: https://github.com/hkim0331/project-euler/compare/0.1.1...HEAD
+[0.4.3]: https://github.com/hkim0331/project-euler/compare/0.4.2...0.4.3
 [0.4.2]: https://github.com/hkim0331/project-euler/compare/0.4.0...0.4.2
 [0.4.0]: https://github.com/hkim0331/project-euler/compare/0.3.0...0.4.0
 [0.3.0]: https://github.com/hkim0331/project-euler/compare/0.2.0...0.3.0
