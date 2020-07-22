@@ -25,6 +25,7 @@
   (if (< n 3)
       3
       (np n)))
+
 (defn nth-prime [n]
   (last (take n (iterate next-prime 2))))
 
