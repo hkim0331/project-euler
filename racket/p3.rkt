@@ -11,7 +11,7 @@
   (lambda (n)
     (f-aux n 3 '())))
 
-(factor 13195)
+(factor 13193)
 
 (define p3
   (lambda (n)
