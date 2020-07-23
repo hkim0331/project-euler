@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file. This change
 
 ## [Unreleased]
 
+## 0.4.4 - 2020-07-23
+* problem 13,14,15
+
 ## [0.4.3] - 2020-07-22
 * problem 11, 12
 
