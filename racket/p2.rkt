@@ -19,12 +19,34 @@
   (lambda (n)
     (fibo-aux n '(2 1))))
 
-(fibo-under-n 100)
+; (fibo-under-n 100)
 
-(filter even? (range 10))
+; (filter even? (range 10))
 
 (define p2
   (lambda (n)
     (apply + (filter even? (fibo-under-n n)))))
 
 (time (p2 4000000))
+
+;;;
+
+(define fibo-slow
+  (lambda (n)
+    (cond
+      ((< n 2) n)
+      (else (+ (fibo-slow (- n 1))
+               (fibo-slow (- n 2)))))))
+
+(define fu4m-aux
+  (lambda (n m ret)
+    (cond
+      ((> n m) ret)
+      (else (fu4m-aux (+ n 1) m (cons (fibo-slow n) ret))))))
+
+(define fu4m
+  (lambda (m)
+    (apply + (filter even? (fu4m-aux 1 m '())))))
+
+
+

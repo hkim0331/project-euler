@@ -27,7 +27,6 @@
 
 (take 10 triangle-number)
 
-
 (defn- aux [n m ret]
   (cond
     (< n (* m m)) ret
