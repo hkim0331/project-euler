@@ -45,9 +45,10 @@
     (empty? a) 0
     (empty? (second a)) (ffirst a)
     (empty? (third a)) (+ (apply max (first a)) (fsecond a))
-    :else (let [f (map #(apply max %) (partition 2 1 (first a)))
-                s (second a)]
-            (recur (cons (map + f s) (rrest a))))))
+    :else
+      (let [f (map #(apply max %) (partition 2 1 (first a)))
+            s (second a)]
+        (recur (cons (map + f s) (rrest a))))))
 
 (defn p18 [tri]
   (p18-aux (reverse tri)))
