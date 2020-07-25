@@ -2,9 +2,16 @@
 All notable changes to this project will be documented in this file. This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
+* problem 19, 20, 21
+
+## [0.4.5] -2020-07-25
+* problem 18
+
+## - 2020-07-24
+* problem 16, 17
 
 ## 0.4.4 - 2020-07-23
-* problem 13,14,15
+* problem 13, 14, 15
 
 ## [0.4.3] - 2020-07-22
 * problem 11, 12
