@@ -30,13 +30,20 @@
 (defn- aux [n m ret]
   (cond
     (< n (* m m)) ret
-    (zero? (rem n m)) (aux n (+ 1 m) (into ret [m (/ n m)]))
+    (= n (* m m)) (conj ret m)
+    (zero? (rem n m))
+    (aux n (+ 1 m) (conj ret m (/ n m)))
     :else (aux n (+ 1 m) ret)))
 
-(defn divisors [n]
-  (aux n 2 [1 n]))
+(defn proper-divisors [n]
+  (aux n 2 [1]))
 
-(divisors 28)
+(defn divisors [n]
+  (conj (proper-divisors n) n))
+
+(proper-divisors 4)
+(proper-divisors 128)
+(sort (divisors 128))
 
 (defn p12 [n]
   (first

@@ -2,7 +2,15 @@
 All notable changes to this project will be documented in this file. This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
+
+## [0.6.0] - 2020-07-26
+* problem 22, 23, 24
+problem 23 の実行時間が 17sec をどうにかできないか？
+
+
+## [0.5.0] - 2020-07-26
 * problem 19, 20, 21
+* accumulate 関数にてこずる。
 
 ## [0.4.5] -2020-07-25
 * problem 18
@@ -56,6 +64,8 @@ All notable changes to this project will be documented in this file. This change
 - Widget maker public API - `make-widget-sync`.
 
 [Unreleased]: https://github.com/hkim0331/project-euler/compare/0.1.1...HEAD
+[0.5.0]: https://github.com/hkim0331/project-euler/compare/0.4.3...0.5.0
+[0.4.5]: https://github.com/hkim0331/project-euler/compare/0.4.3...0.4.5
 [0.4.3]: https://github.com/hkim0331/project-euler/compare/0.4.2...0.4.3
 [0.4.2]: https://github.com/hkim0331/project-euler/compare/0.4.0...0.4.2
 [0.4.0]: https://github.com/hkim0331/project-euler/compare/0.3.0...0.4.0
