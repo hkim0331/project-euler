@@ -19,6 +19,7 @@
                             plain)))
     (recur (+ 1 year))))
 
+;; この acc, acc-aux は iterate で置き換えられるはず。
 (defn- acc-aux [f ini a ret]
   (if (empty? a)
       ret

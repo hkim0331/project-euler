@@ -32,6 +32,6 @@
 ;(nth-prime 6)
 ;13
 
-(time  (last (take 10001 (iterate next-prime 2))))
+;(time  (last (take 10001 (iterate next-prime 2))))
 ;"Elapsed time: 218.497036 msecs"
 ;104743

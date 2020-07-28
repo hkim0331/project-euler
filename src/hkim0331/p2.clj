@@ -17,34 +17,33 @@
      (lazy-seq
        (cons n (lazy-seq-fibo b n))))))
 
-(take 10 (lazy-seq-fibo))
+;(take 10 (lazy-seq-fibo))
 
-(take-while (partial > 4000)
-            (filter even? (lazy-seq-fibo)))
+; (take-while (partial > 4000)
+;             (filter even? (lazy-seq-fibo)))
 
 (defn p2 [n]
  (reduce +
    (take-while (partial > n)
                (filter even? (lazy-seq-fibo)))))
 
-(def four-million 4000000)
+; (def four-million 4000000)
 
-(time (p2 four-million))
+; (time (p2 four-million))
 
 (defn fibo []
   (map
     first
-      (iterate (fn [[a b]] [b (+ a b)])
-        [1 2])))
+    (iterate (fn [[a b]] [b (+ a b)]) [1 2])))
 
-(take 10 (fibo))
+; (take 10 (fibo))
 
 (defn p2' [n]
   (reduce +
     (take-while (partial > n)
                 (filter even? (fibo)))))
 
-(time (p2' four-million))
+; (time (p2' four-million))
 
 ;; how about not lazy
 
@@ -56,6 +55,6 @@
 (defn fibo-cons [n]
   (f-aux n '(2 1)))
 
-(time
-  (reduce +
-    (filter even? (fibo-cons 4000000))))
+; (time
+;   (reduce +
+;     (filter even? (fibo-cons 4000000))))
