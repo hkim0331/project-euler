@@ -34,8 +34,7 @@
 (defn fibo []
   (map
     first
-      (iterate (fn [[a b]] [b (+ a b)])
-        [1 2])))
+    (iterate (fn [[a b]] [b (+ a b)]) [1 2])))
 
 ; (take 10 (fibo))
 

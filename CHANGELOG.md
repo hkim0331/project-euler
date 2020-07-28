@@ -3,10 +3,11 @@ All notable changes to this project will be documented in this file. This change
 
 ## [Unreleased]
 
+
+## [0.7.0] - 2020-07-28
 ## [0.6.0] - 2020-07-26
 * problem 22, 23, 24
 problem 23 の実行時間が 17sec をどうにかできないか？
-
 
 ## [0.5.0] - 2020-07-26
 * problem 19, 20, 21
