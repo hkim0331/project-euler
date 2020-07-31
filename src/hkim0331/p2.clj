@@ -27,16 +27,17 @@
    (take-while (partial > n)
                (filter even? (lazy-seq-fibo)))))
 
-; (def four-million 4000000)
+(def four-million 4000000)
 
 ; (time (p2 four-million))
+;"Elapsed time: 0.413659 msecs"
+;4613732N
 
 (defn fibo []
   (map
     first
     (iterate (fn [[a b]] [b (+ a b)]) [1 2])))
 
-; (take 10 (fibo))
 
 (defn p2' [n]
   (reduce +
@@ -44,6 +45,8 @@
                 (filter even? (fibo)))))
 
 ; (time (p2' four-million))
+; "Elapsed time: 0.206818 msecs"
+; 4613732
 
 ;; how about not lazy
 
@@ -53,8 +56,10 @@
     (f-aux n (cons (+ (first xs) (second xs)) xs))))
 
 (defn fibo-cons [n]
-  (f-aux n '(2 1)))
+  (f-aux n '(2N 1N)))
 
 ; (time
 ;   (reduce +
 ;     (filter even? (fibo-cons 4000000))))
+; "Elapsed time: 0.159481 msecs"
+; 4613732

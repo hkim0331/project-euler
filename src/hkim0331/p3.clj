@@ -12,13 +12,13 @@
 (defn factor [n]
   (f-aux n 3 []))
 
-(factor 13195)
+;(factor 13195)
 
 (defn p3 [n]
   (apply max (factor n)))
 
-(p3 13195)
+;(p3 13195)
 
-(p3 600851475143)
-
-(time (p3 600851475143))
+; (time (p3 600851475143))
+; "Elapsed time: 2.238042 msecs"
+; 6857

@@ -20,5 +20,6 @@
                    (= (+ (sq x) (sq y)) (sq z)))]
       [x y z]))
 
-(reduce * (first (p9 1000)))
+; (time (reduce * (first (p9 1000))))
+; "Elapsed time: 42.445076 msecs"
 ; 31875000

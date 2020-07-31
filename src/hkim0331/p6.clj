@@ -21,5 +21,8 @@
       (sq (apply + rng))
       (apply + (map (partial sq) rng)))))
 
-(p6 10)
-(p6 100)
+;(p6 10)
+
+; (time (p6 100))
+; "Elapsed time: 0.272915 msecs"
+; 25164150
