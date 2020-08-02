@@ -14,7 +14,7 @@
 
 (def ^:dynamic *TM* 2000000)
 
-;(time (reduce + (p10 *TM*)))
+; (time (reduce + (p10 *TM*)))
 ; "Elapsed time: 5790.05082 msecs"
 ; 142913828922
 ;
@@ -48,8 +48,18 @@
     (+ (reduce + primes)
        (reduce + (remove #(divide-by? primes %) (range 3 n 2))))))
 
-(time (p10' 2000000))
+;(time (p10' 2000000))
 ; "Elapsed time: 2373.084627 msecs"
 ; 142913828922
 ;
 ; さらに倍速。この辺で。
+
+(defn p10'' [n]
+  (let [primes (primes-under-sqrt n)]
+    (+ (apply + primes)
+       (apply + (remove #(divide-by? primes %) (range 3 n 2))))))
+
+;(time (p10'' 2000000)
+; "Elapsed time: 2108.059204 msecs")
+;142913828922
+;もうちょっとで 2 秒切るな。
