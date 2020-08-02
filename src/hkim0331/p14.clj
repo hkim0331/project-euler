@@ -43,7 +43,39 @@
             (recur (inc i) len i)
             (recur (inc i) max at))))))
 
-; (time (p14-memo 1000000))
+(time (p14-memo 1000000))
 ; "Elapsed time: 43612.379248 msecs"
 ; (time (p14-memo 1000000))
 ; "Elapsed time: 822.398522 msecs"
+
+(defn collatz-count [n]
+  (cond
+    (= n 1) 1
+    (even? n) (+ 1 (collatz-count (/ n 2)))
+    :else (+ 2 (collatz-count (/ (+ 1 (* 3 n)) 2)))))
+
+(defn p14-count [n]
+  (loop [i (/ n 2) max 0 at 0]
+    (if (> i n)
+        [max at]
+        (let [len (collatz-count i)]
+          (if (> len max)
+            (recur (inc i) len i)
+            (recur (inc i) max at))))))
+
+;(time (p14-count 1000000))
+; "Elapsed time: 4070.739315 msecs"
+; [525 837799]
+
+(def cc-mem (memoize collatz-count))
+
+(defn p14-mem [n]
+  (loop [i (/ n 2) max 0 at 0]
+    (if (> i n)
+        [max at]
+        (let [len (cc-mem i)]
+          (if (> len max)
+            (recur (inc i) len i)
+            (recur (inc i) max at))))))
+
+(time (p14-mem 1000000))
