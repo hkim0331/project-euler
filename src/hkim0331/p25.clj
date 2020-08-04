@@ -16,10 +16,14 @@
                     (+ (as 1) (bs 1))]])
              [[1 1N] [2 1N]])))
 
-(defn- power [base n]
-  (if (zero? n)
-   1N
-   (* base (power base (- n 1)))))
+(defn- sq [n]
+ (* n n))
+
+(defn power [base n]
+  (cond
+    (zero? n) 1N
+    (even? n) (sq (power base (/ n 2)))
+    :else (* base (power base (- n 1)))))
 
 (defn p25 [n]
  (first
