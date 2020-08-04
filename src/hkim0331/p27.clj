@@ -14,10 +14,10 @@
 (defn p27 [n]
   (reduce
     (fn [a b] (if (> (a 1) (b 1)) a b))
-    (for [a (range (+ -n 1) n)
+    (for [a (range (+ (- 0 n) 1) n)
           b (filter prime? (range 3 n))]
       [(* a b) (count (qd a b))])))
 
 ; (time (p27 1000))
-; "Elapsed time: 756.954731 msecs"
+; "Elapsed time: 1333.047395 msecs"
 ; [-59231 71]

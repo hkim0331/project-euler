@@ -27,4 +27,6 @@
       ;; インデックスを一つずらす。
       (cons "DUMMY" names))))
 
-(reduce + (p22 names))
+; (time (reduce + (p22 names)))
+; "Elapsed time: 29.890069 msecs"
+; 871198282

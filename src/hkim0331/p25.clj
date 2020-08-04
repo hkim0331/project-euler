@@ -26,7 +26,7 @@
    (drop-while (fn [v] (< (v 1) (power 10 n)))
                (fibo-index))))
 
-(time (p25 999))
+;(time (p25 999))
 ;Elapsed time: 527.719401 msecs
 
 ;これをループで書き直すとどうなるか？
@@ -37,6 +37,7 @@
         n
         (recur b (+ a b) (inc n))))))
 
-(time (p25+ 999))
-;Elapsed time: 9.595976 msecs
+; (time (p25+ 999))
+; "Elapsed time: 20.137173 msecs"
+; 4782
 
