@@ -22,7 +22,9 @@
 ; ((p30? 4) 9474)
 
 ; 何桁の数まで探せばいいか？が問題。
-;(* 6 (power 9 5))
+(map (partial < 1)
+     (for [i (range 1 10)]
+       (/ (* i (power 9 5)) (power 10 i))))
 
 ; brute force
 ; (time
