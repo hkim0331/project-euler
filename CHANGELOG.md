@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file. This change
 
 ## [Unreleased]
 
+## [0.8.0] - 2020-08-04
+* problem 28, 29, 30
 
 ## [0.7.0] - 2020-07-28
 * problem 25, 26, 27
@@ -67,6 +69,9 @@ problem 23 の実行時間が 17sec をどうにかできないか？
 - Widget maker public API - `make-widget-sync`.
 
 [Unreleased]: https://github.com/hkim0331/project-euler/compare/0.1.1...HEAD
+[0.8.0]: https://github.com/hkim0331/project-euler/compare/0.7.0...0.8.0
+[0.7.0]: https://github.com/hkim0331/project-euler/compare/0.6.0...0.7.0
+[0.6.0]: https://github.com/hkim0331/project-euler/compare/0.5.0...0.6.0
 [0.5.0]: https://github.com/hkim0331/project-euler/compare/0.4.3...0.5.0
 [0.4.5]: https://github.com/hkim0331/project-euler/compare/0.4.3...0.4.5
 [0.4.3]: https://github.com/hkim0331/project-euler/compare/0.4.2...0.4.3
