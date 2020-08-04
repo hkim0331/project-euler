@@ -38,4 +38,6 @@
     (filter #(= 5 (mod % 7))
             (acc + (flatten ds)))))
 
-(p19 @days)
+; (time (p19 @days))
+; "Elapsed time: 7.840267 msecs"
+; 171

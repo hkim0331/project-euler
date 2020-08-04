@@ -73,5 +73,8 @@
   ([n]
    (p17-aux 1 n)))
 
-(count (str/replace (apply str (p17-aux 1000)) #"\s" ""))
-
+; (time
+;  (count
+;   (str/replace (apply str (p17-aux 1000)) #"\s" "")))
+; "Elapsed time: 12.098765 msecs"
+; 21124

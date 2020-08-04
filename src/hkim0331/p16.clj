@@ -19,4 +19,7 @@
    (map c->i (-> n power2 str seq))))
 
 (p16 15)
-(p16 1000)
+
+; (time (p16 1000))
+; "Elapsed time: 0.654789 msecs"
+; 1366
