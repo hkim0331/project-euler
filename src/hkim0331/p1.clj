@@ -27,4 +27,6 @@
 
 ;((juxt p1 p1' p1'') 20)
 
-(reduce + (p1 1000))
+; (time (reduce + (p1'' 1000)))
+; "Elapsed time: 0.544521 msecs"
+; 233168

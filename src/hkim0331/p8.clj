@@ -74,7 +74,9 @@
         s3 (map char-product s2)]
     (apply max s3)))
 
-(p8 s1 4)
+;(p8 s1 4)
 ;5832
-(p8 s1 13)
 
+;(time (p8 s1 13)
+; "Elapsed time: 9.981819 msecs")
+; 23514624000

@@ -18,7 +18,7 @@
            (swap! s conj v)))
        (reduce + @s))))
 
-(time (p23 28123))
+;(time (p23 28123))
 ;"Elapsed time: 17000.534095 msec"
 
 (defn p23-improve [n]
@@ -29,7 +29,7 @@
            (for [x an y an]
              (min (+ x y) n)))))))
 
-(time (p23-improve 28123))
+;(time (p23-improve 28123))
 ;"Elapsed time: 5849.054534 msecs"
 
 (defn abundant-vector [n]
@@ -45,5 +45,6 @@
              (min (+ (av x) (av y)) n)))))))
 
 
-(time (p23-vector 28123))
+;(time (p23-vector 28123))
 ;"Elapsed time: 2930.930966 msecs"
+;4179871

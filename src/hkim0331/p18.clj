@@ -53,10 +53,12 @@
 (defn p18 [tri]
   (p18-aux (reverse tri)))
 
-(p18 [])
-(p18 [[1]])
-(p18 [[1] [3 4]])
-(p18 q-test)
+; (p18 [])
+; (p18 [[1]])
+; (p18 [[1] [3 4]])
+; (p18 q-test)
 
-(p18 q18)
+; (time (p18 q18)
+;  "Elapsed time: 0.498027 msecs")
+; 1074
 

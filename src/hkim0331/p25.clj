@@ -16,17 +16,21 @@
                     (+ (as 1) (bs 1))]])
              [[1 1N] [2 1N]])))
 
-(defn- power [base n]
-  (if (zero? n)
-   1N
-   (* base (power base (- n 1)))))
+(defn- sq [n]
+ (* n n))
+
+(defn power [base n]
+  (cond
+    (zero? n) 1N
+    (even? n) (sq (power base (/ n 2)))
+    :else (* base (power base (- n 1)))))
 
 (defn p25 [n]
  (first
    (drop-while (fn [v] (< (v 1) (power 10 n)))
                (fibo-index))))
 
-(time (p25 999))
+;(time (p25 999))
 ;Elapsed time: 527.719401 msecs
 
 ;これをループで書き直すとどうなるか？
@@ -37,6 +41,7 @@
         n
         (recur b (+ a b) (inc n))))))
 
-(time (p25+ 999))
-;Elapsed time: 9.595976 msecs
+; (time (p25+ 999))
+; "Elapsed time: 20.137173 msecs"
+; 4782
 
