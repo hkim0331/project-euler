@@ -19,6 +19,7 @@
            (zero? (rem % 5)))
       (iterate inc 1))))
 
+(range 1 20)
 (defn p1'' [n]
   (filter
       #(or (zero? (rem % 3))
