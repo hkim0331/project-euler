@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file. This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
+* problem 41, 42, 43.
+
+
+## [0.10.0] - 2020-08-08
+* problem 37, 38, 39, 40
 
 ## [0.9.0] - 2020-08-06
 * problem 31, 32, 33, 34, 35, 36
@@ -60,10 +65,10 @@ problem 23 の実行時間が 17sec をどうにかできないか？
 ### Changed
 - Documentation on how to make the widgets.
 
-### Removed
+## Removed
 - `make-widget-sync` - we're all async, all the time.
 
-### Fixed
+## Fixed
 - Fixed widget maker to keep working when daylight savings switches over.
 
 ## 0.1.0 - 2020-07-11
