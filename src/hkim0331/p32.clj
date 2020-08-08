@@ -19,7 +19,6 @@
         sy (seq (str y))
         sz (seq (str (* x y)))
         cc (concat sx sy sz)]
-;   (prn cc)
    (and
      (= 9 (count cc))
      (= #{\1 \2 \3 \4 \5 \6 \7 \8 \9} (into #{} cc)))))
