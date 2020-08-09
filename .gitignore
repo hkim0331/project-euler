@@ -10,3 +10,4 @@ checkouts
 .hgignore
 .hg/
 .rebel_readline_history
+.tags*

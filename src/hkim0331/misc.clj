@@ -1,6 +1,7 @@
 (ns hkim0331.misc)
 
 ;; prime number sequence. from 'Programming Clojure', p69.
+
 (def primes
   (concat
    [2 3 5 7]
@@ -36,3 +37,14 @@
 				(zero? e) 1
 		  (even? e) (sq (power b (/ e 2)))
 		  :else (* b (power b (- e 1)))))
+
+; (take 3 (range 10))
+; エラーにならない。
+; (0 1 2)
+
+(defn pandigital? [n]
+  (let [p (seq (str n))
+        d (take (count p) (seq (apply str (range 1 10))))]
+   (= (set p) (set d))))
+
+
