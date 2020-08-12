@@ -9,15 +9,38 @@
 
 ; Find the next triangle number that is also pentagonal and hexagonal.
 
-(defn t [n]
+(defn tri [n]
   (/ (* n (+ n 1)) 2))
 
-(defn p [n]
+(defn penta [n]
   (/ (* n (- (* 3 n) 1)) 2))
 
-(defn h [n]
+(defn hexa [n]
   (* n (- (* 2 n) 1)))
 
-; (t 285)
-; (p 165)
-; (h 143)
+(= (tri 285) (penta 165) (hexa 143))
+;true
+
+(defn tph [t p h]
+   (cond
+    (= (tri t) (penta p) (hexa h)) [t p h]
+    (< (tri t) (penta p))  (recur (+ 1 t) p h)
+    (< (penta p) (hexa h)) (recur t (+ 1 p) h)
+    (< (hexa h) (tri t))   (recur t p (+ 1 h))
+    :else "error"))
+
+(time (tph 285 165 (+ 143 1))
+; "Elapsed time: 143.064798 msecs"
+; [55385 31977 27693]
+
+;;村上の回答見てバージョンアップ。
+;;そうか、tri number は hexa number だったか。
+(defn ph' [p h]
+   (cond
+    (= (penta p) (hexa h)) [p h]
+    (< (penta p) (hexa h)) (recur (+ 1 p) h)
+    (> (penta p) (hexa h)) (recur p (+ 1 h))))
+
+; (time (ph' 165 144))
+; "Elapsed time: 59.005417 msecs"
+; [31977 27693]
