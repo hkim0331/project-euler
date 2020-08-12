@@ -29,9 +29,19 @@
     (< (hexa h) (tri t))   (recur t p (+ 1 h))
     :else "error"))
 
-(time (tph 285 165 (+ 143 1))
+; 大学マック
+;(time (tph 285 165 (+ 143 1))
 ; "Elapsed time: 143.064798 msecs"
 ; [55385 31977 27693]
+
+; 家マック
+;(time (tph 285 165 (+ 143 1)))
+;"Elapsed time: 37.088093 msecs"
+; [55385 31977 27693]
+; あれ？昼間よりかなりスピードアップした。
+; なぜに？パソコン違うか。
+; 大学のマックの方がスペックは上のはずだが？
+; 後でもう一度確認してみよう。
 
 ;;村上の回答見てバージョンアップ。
 ;;そうか、tri number は hexa number だったか。
@@ -41,6 +51,26 @@
     (< (penta p) (hexa h)) (recur (+ 1 p) h)
     (> (penta p) (hexa h)) (recur p (+ 1 h))))
 
-; (time (ph' 165 144))
+(time (ph' 165 144))
+;"Elapsed time: 23.766532 msecs"
 ; "Elapsed time: 59.005417 msecs"
 ; [31977 27693]
+
+;; ローカル変数と評価の順番を変え、姑息にスピードアップ。
+;; スピードアップなるか？
+(defn ph'' [p h]
+ (let [pp (penta p)
+       hh (hexa  h)]
+   (cond
+    (< pp hh) (recur (+ 1 p) h)
+    (> pp hh) (recur p (+ 1 h))
+    (= pp hh) [p h])))
+
+;(time (ph'' 165 144))
+; "Elapsed time: 18.784755 msecs"
+; [31977 27693]
+
+;; もう一回、続けて評価すると、インチキなスピードが出る。
+;(time (ph'' 165 144))
+;"Elapsed time: 4.567639 msecs"
+;[31977 27693]
