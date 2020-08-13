@@ -1,5 +1,5 @@
 (ns hkim0331.p47
-  (:require [hkim0331.misc :refer [prime-factors]]))
+  (:require [hkim0331.misc :refer [prime-factors prime-factors-2]]))
 
 ; The first two consecutive numbers to have two distinct prime factors are:
 
@@ -14,25 +14,24 @@
 
 ; Find the first four consecutive integers to have four distinct prime factors each. What is the first of these numbers?
 
-;distinct primefactors count
+; distinct prime factors count
 (defn dpfc [n]
   (count (set (prime-factors n))))
 
-(= 2 (dpfc 14))
-(= 2 (dpfc 15))
 
 (defn p47 [n]
  (loop [i 2 c 0]
    (if (= c n)
      (- i n)
      (recur (inc i)
-           (if (= n (dpfc i))
-             (inc c)
-             0)))))
+            (if (= n (dpfc i))
+              (inc c)
+              0)))))
 
-(p47 2)
-;14
-(p47 3)
-;644
-(p47 4)
-;Syntax error (StackOverflowError) compiling at (REPL:1:1).
+;(= 14  (p47 2))
+;(= 644 (p47 3))
+
+
+;(time (p47 4))
+; "Elapsed time: 27140.529867 msecs"
+; 134043

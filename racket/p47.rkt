@@ -20,7 +20,6 @@
       ((< n (* i i)) ret)
       ((zero? (modulo n i))
        (dpfc-aux (/ n i) (+1 i) (cons (i ))))
-      
       (else (dpfc-aux n (+ 1 i) mx ret)))))
 
 (define dpfc

@@ -37,20 +37,22 @@
 (defn pf-aux [n d ret]
     (cond
       (= n 1) ret
-      (zero? (mod n d)) (recur (/ n d) d (conj ret d))
-      :else (recur n (+ 1 d) ret)))
+      (zero? (mod n d))
+      (recur (/ n d) d (conj ret d))
+      :else
+      (recur n (+ 1 d) ret)))
 
 (defn prime-factors [n]
   (if (= n 1)
    1
-   (pf-aux n 2 [])))
+   (doall (pf-aux n 2 []))))
 
-; (loop [n 1]
-;    (when (< n 100)
-;      (prn (prime-factors n)))
-;    (recur (inc n)))
+;;other definition、 これは遅いか。
+(defn prime-factors-2 [n]
+  (filter #(zero? (mod n %))
+     (take-while #(< % n) primes)))
 
-;;  power, power-mod
+;; power, power-mod
 
 (defn power [b e]
     (cond
