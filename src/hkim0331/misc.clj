@@ -1,5 +1,8 @@
 (ns hkim0331.misc)
 
+(defn sq [n]
+  (* n n))
+
 ;; prime number sequence. from 'Programming Clojure', p69.
 
 (def primes
@@ -19,32 +22,52 @@
 
 (defn- prime?-aux [n m]
   (cond
-  		(< n (* m m)) true
-  		(zero? (rem n m)) false
-  		:else (recur n (+ m 2))))
+      (< n (* m m)) true
+      (zero? (rem n m)) false
+      :else (recur n (+ m 2))))
 
 (defn prime? [n]
-		(cond
-				(< n 3) (= n 2)
-				(even? n) false
-				:else (prime?-aux n 3)))
+    (cond
+          (< n 3) (= n 2)
+          (even? n) false
+          :else (prime?-aux n 3)))
 
-(defn sq [n]
-		(* n n))
+;;; prime factors
+
+(defn pf-aux [n d ret]
+    (cond
+      (= n 1) ret
+      (zero? (mod n d)) (recur (/ n d) d (conj ret d))
+      :else (recur n (+ 1 d) ret)))
+
+(defn prime-factors [n]
+  (if (= n 1)
+   1
+   (pf-aux n 2 [])))
+
+; (loop [n 1]
+;    (when (< n 100)
+;      (prn (prime-factors n)))
+;    (recur (inc n)))
+
+;;  power, power-mod
 
 (defn power [b e]
-		(cond
-				(zero? e) 1
-		  (even? e) (sq (power b (/ e 2)))
-		  :else (* b (power b (- e 1)))))
+    (cond
+      (zero? e) 1N
+      (even? e) (sq (power b (/ e 2)))
+      :else (* b (power b (- e 1)))))
 
-; (take 3 (range 10))
-; エラーにならない。
-; (0 1 2)
+(defn power-mod [b e m]
+  (cond
+    (zero? e) 1N
+    (even? e) (mod (sq (power-mod b (/ e 2) m)) m)
+    :else (mod (* (mod b m)
+                  (power-mod b (- e 1) m)) m)))
+
+;;; pandigital
 
 (defn pandigital? [n]
   (let [p (seq (str n))
         d (take (count p) (seq (apply str (range 1 10))))]
    (= (set p) (set d))))
-
-
