@@ -18,15 +18,34 @@
 
 
 (for [n (range 10) r (range 10)]
-  (if (< 10 (combo/count-combinations (range n) r))
-    1
-    0))
+  (< 10 (combo/count-combinations (range n) r)))
 
 ; (time
 ;  (reduce +
-;   (for [n (range 101) r (range 101)]
-;    (if (< 1000000 (combo/count-combinations (range n) r))
-;      1
-;      0))))
-; "Elapsed time: 271.596242 msecs"
+;   (for [n (range 1 101) r (range 1 101)]
+;     (if (< 1000000 (combo/count-combinations (range n) r))
+;       1
+;       0))))
+; "Elapsed time: 271.596242 msecs")
+; 4075
+
+; (time
+;  (count
+;    (filter (partial < 1000000)
+;      (for [n (range 1 101) r (range 1 101)]
+;        (combo/count-combinations (range n) r)))))
+; "Elapsed time: 223.071685 msecs"
+; 4075
+
+(defn c [n r]
+  (if (= r 0) 0
+    (/ (reduce * (range (+ n (* -1 r) 1N) (+ n 1)))
+       (reduce * (range 1N (+ r 1))))))
+
+; (time
+;   (count
+;    (filter (partial < 1000000)
+;            (for [n (range 0 101) r (range 0 101)]
+;              (c n r)))))
+; "Elapsed time: 82.881866 msecs"
 ; 4075
