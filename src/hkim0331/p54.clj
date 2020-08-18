@@ -78,199 +78,174 @@
      (map #(str/split % #"\s")
        (str/split (slurp "resources/p054_poker.txt") #"\n"))))))
 
-(def p1 (first pokers))
-(def p11 (first  p1))
-(def p12 (second p1))
-
-(def weights
- (iterate #(/ % 100) 1.0))
-
-(take 5 weights)
-
 (defn numbers [hand]
   (map first hand))
 
 (defn suits [hand]
   (map second hand))
 
-(defn max-number [hand]
-  (apply max (numbers hand)))
-
-(defn max2-numbers [hand]
-  (reduce +
-     (map * weights
-           (sort > (numbers hand)))))
-
-(def hand1 (ffirst pokers))
-(def hand2 (second (first pokers)))
 
 ;;
 ;; straight
 ;;
 
-(defn straight? [hand]
-  (every? (partial = 1)
-    (map #(- (second %) (first %))
-      (partition 2 1 (sort (numbers hand))))))
-
 (defn straight [hand]
-  (apply max (numbers hand)))
+  (let [ordered (sort (numbers hand))]
+    (when (every? (partial = 1)
+                  (map #(- (second %) (first %))
+                       (partition 2 1 ordered)))
+      (last ordered))))
 
-(straight? [[1 \a] [2 \a] [3 \b] [4 \c] [5 \d]])
-(straight  [[1 \a] [2 \a] [3 \b] [4 \c] [5 \d]])
+; (straight [[6 \a] [2 \a] [3 \b] [4 \c] [5 \d]])
+; (score [[6 \a] [2 \a] [3 \b] [4 \c] [5 \d]])
+
+; (score [[7 \a] [2 \a] [3 \b] [4 \c] [5 \d]])
 
 
 ;;
 ;; flush
 ;;
 
-(defn flush? [hand]
- (apply = (map second hand)))
-
 (defn flush [hand]
- (apply max (numbers hand)))
+  (when (apply = (map second hand))
+   (apply max (numbers hand))))
 
-(flush? [[1 \a] [3 \a] [4 \a] [9 \a]])
-(flush  [[1 \a] [3 \a] [4 \a] [9 \a]])
 
+; (flush [[1 \a] [3 \a] [4 \a] [9 \a]])
+; (flush [[1 \a] [3 \a] [4 \b] [9 \a]])
+; (flush [[6 \H] [2 \H] [8 \H] [13 \H] [4 \H]])
+; (score [[6 \H] [2 \H] [8 \H] [13 \H] [4 \H]])
 ;;
 ;; straight flush
 ;;
 
-(defn straight-flush? [hand]
-  (and (straight? hand)
-       (flush? hand)))
-
 (defn straight-flush [hand]
- (apply max (numbers hand)))
+  (when (and (straight? hand)
+             (flush? hand))
+    (apply max (numbers hand))))
 
-(straight-flush? [[9 \H] [10 \H] [11 \H]  [12 \H] [8 \H]])
-(straight-flush  [[9 \H] [10 \H] [11 \H]  [12 \H] [8 \H]])
+; (straight-flush [[9 \H] [10 \H] [11 \H]  [12 \H] [8 \H]])
+; (straight-flush [[9 \H] [10 \H] [11 \H]  [12 \H] [8 \W]])
 
 ;;
 ;;royal-straight-flush
 ;;
-(defn royal-straight-flush? [hand]
- (and (straight-flush? hand)
-      (= 10 (apply min (map first hand)))))
-
 (defn royal-straight-flush [hand]
-  (apply max (numbers hand)))
+  (when (and (straight-flush? hand)
+           (= 10 (apply min (map first hand))))
+    (apply max (numbers hand))))
 
-(royal-straight-flush? [[12 \H] [10 \H] [11 \H]  [13 \H] [14 \H]])
-(royal-straight-flush? [[12 \H] [10 \H] [11 \H]  [13 \C] [14 \H]])
-(royal-straight-flush  [[12 \H] [10 \H] [11 \H]  [13 \H] [14 \H]])
+; (royal-straight-flush [[12 \H] [10 \H] [11 \H]  [13 \H] [14 \H]])
+; (royal-straight-flush [[12 \H] [10 \H] [11 \H]  [13 \C] [14 \H]])
 
 ;;
 ;; four-cards
-
-(defn four-cards? [hand]
-  (some #(= 4 (count %))
-    (vals (group-by identity (numbers hand)))))
-
-(four-cards? [[1 \H] [1 \C] [1 \D] [2 \S] [1 \S]])
-(four-cards? [[1 \H] [1 \C] [1 \D] [2 \S] [3 \S]])
+;;
 
 (defn four-cards [hand]
-  (let [vals (group-by identity (numbers hand))]
-    (+ (ffirst vals)
-       (* 0.01 (first (second vals))))))
+  (let [gs (group-by identity (numbers hand))
+        vs (vals gs)]
+    (when (some #(= 4 (count %)) vs)
+      (let [[v0 v1] vs]
+        (if (= 1 (count v0))
+           (+ (first v1) (/ (first v0) 100.))
+           (+ (first v0) (/ (first v1) 100.)))))))
 
-(four-cards [[1 \H] [1 \C] [1 \D] [2 \S] [1 \S]])
+; (four-cards [[1 \H] [1 \C] [1 \D] [2 \S] [1 \S]])
+; (four-cards [[1 \H] [1 \C] [1 \D] [2 \S] [3 \S]])
+; (four-cards [[2 \H] [1 \C] [2 \D] [2 \S] [2 \S]])
 
 ;;
 ;; full house
 ;;
 
-(defn full-house? [hand]
-  (= 2 (count (group-by identity (numbers hand)))))
-
-(full-house? [[1 \H] [1 \C] [1 \D] [2 \S] [2 \S]])
-(full-house? [[1 \H] [1 \C] [2 \D] [2 \S] [3 \S]])
-
-; bug.
-; (defn full-house [hand]
-;   (let [vals (group-by identity (numbers hand))]
-;     (+ (ffirst vals)
-;        (* 0.01 (first (second vals))))))
-
 (defn full-house [hand]
-  (let [{g1 c1 g2 c2} (group-by identity (numbers hand))]
-    (prn g1 c1 g2 c2)))
+  (let [gs (group-by identity (numbers hand))]
+    (when (= 2 (count gs))
+      (let [[v0 v1] (vals gs)]
+        (if (= 2 (count v0))
+          (+ (first v1) (/ (first v0) 100.))
+          (+ (first v0) (/ (first v1) 100.)))))))
 
-
-(full-house [[1 \H] [1 \C] [2 \D] [2 \S] [2 \S]])
+; (full-house [[1 \H] [1 \C] [1 \D] [2 \S] [2 \S]])
+; (full-house [[1 \H] [1 \C] [2 \D] [2 \S] [2 \S]])
+; (full-house [[1 \H] [1 \C] [3 \D] [2 \S] [2 \S]])
 
 ;;
 ;; three cards
 ;;
 
-(defn three-cards? [hand]
-  (some #(= 3 (count %))
-    (vals (group-by identity (numbers hand)))))
-
-(three-cards? [[1 \H] [1 \C] [2 \D] [2 \S] [1 \S]])
-(three-cards? [[1 \H] [1 \C] [2 \D] [2 \S] [3 \S]])
-
 (defn three-cards [hand]
-  (let [vals (group-by identity (numbers hand))]
-   (+ (ffirst vals)
-      (reduce +
-        (map * [0.01 0.0001]
-               (map first (rest vals)))))))
+  (let [gs (group-by identity (numbers hand))]
+    (when (some #(= 3 (count %)) (vals gs))
+      (let [[k0 k1 k2] (keys gs)]
+        (cond
+          (= 3 (count (gs k0)))
+          (+ k0 (/ (max k1 k2) 100.) (/ (min k1 k2) 10000.))
+          (= 3 (count (gs k1)))
+          (+ k1 (/ (max k2 k0) 100.) (/ (min k2 k0) 10000.))
+          :else
+          (+ k2 (/ (max k0 k1) 100.) (/ (min k0 k1) 10000.)))))))
 
-(three-cards [[1 \H] [1 \C] [2 \D] [2 \S] [2 \S]])
+; (three-cards [[1 \H] [1 \C] [2 \D] [3 \S] [1 \S]])
+; (three-cards [[1 \H] [1 \C] [2 \D] [2 \S] [3 \S]])
+; (three-cards [[14 \H] [1 \C] [2 \D] [2 \S] [2 \S]])
 
 ;;
 ;; two pairs
 ;;
 
-(defn two-pairs? [hand]
-  (= 3 (count (vals (group-by identity (numbers hand))))))
-
-(two-pairs? [[1 \H] [1 \C] [2 \D] [2 \S] [3 \S]])
-(two-pairs? [[1 \H] [1 \C] [2 \D] [4 \S] [3 \S]])
-(two-pairs? [[5 \C] [14 \D][5 \D] [14 \C][9 \C]])
-
-
+;;bug
 (defn two-pairs [hand]
- (let [vals (group-by identity (numbers hand))]
-   (+
-     (reduce +
-         (map * [1 0.001]
-                (sort > (map first (take 2 vals)))))
-     (* 0.00001 (first (last vals))))))
+  (let [gs (group-by identity (numbers hand))]
+;    (prn gs)
+    (when (= 3 (count gs))
+      (let [[k0 k1 k2] (keys gs)]
+        (cond
+          (= 1 (count (gs k0)))
+          (+ (max k1 k2) (/ (min k1 k2) 100.) (/ k0 10000.))
+          (= 1 (count (gs k1)))
+          (+ (max k2 k0) (/ (min k2 k0) 100.) (/ k1 10000.))
+          :else
+          (+ (max k0 k1) (/ (min k0 k1) 100.) (/ k2 10000.)))))))
 
-(two-pairs [[1 \H] [1 \C] [2 \D] [2 \S] [3 \S]])
-(two-pairs [[5 \C] [14 \D][5 \D] [14 \C][9 \C]])
-;;
-;; one pair?
-;;
-(defn one-pair? [hand]
-  (= 4 (count (vals (group-by identity (numbers hand))))))
+; (two-pairs [[1 \H] [1 \C] [2 \D] [2 \S] [3 \S]])
+; (two-pairs [[1 \H] [1 \C] [2 \D] [4 \S] [3 \S]])
+; (two-pairs [[5 \C] [14 \D][5 \D] [14 \C][9 \C]])
 
-(one-pair? [[1 \H] [1 \C] [2 \D] [4 \S] [3 \S]])
-(one-pair? [[1 \H] [5 \C] [2 \D] [4 \S] [3 \S]])
+; (two-pairs [[7 \H] [2 \C] [3 \D] [4 \S] [5 \S]])
+; (score [[7 \H] [2 \C] [3 \D] [4 \S] [5 \S]])
+
+;;
+;; one pair
+;;
 
 (defn one-pair [hand]
-  (let [vals (group-by identity (numbers hand))]
-   (+ (ffirst vals)
-      (reduce +
-        (map * weights
-               (sort > (map first (rest vals))))))))
+  (let [gs (group-by identity (numbers hand))]
+    (when (= 4 (count gs))
+      (let [temp (sort > (keys gs))
+            k (first (filter #(= 2 (count (gs %))) temp))
+            ks (filter (partial = k) temp)]
+        (reduce + k (map / ks (iterate (partial * 100) 100.)))))))
 
-(one-pair [[1 \H] [1 \C] [2 \D] [4 \S] [3 \S]])
+; (one-pair [[1 \H] [1 \C] [2 \D] [4 \S] [3 \S]])
+; (one-pair [[1 \H] [5 \C] [2 \D] [4 \S] [3 \S]])
+
 ;;
 ;; high-card
 ;;
 
 (defn high-card [hand]
-  (reduce +
-    (map * weights
-           (sort > (map first hand)))))
+  (let [nums (sort > (numbers hand))]
+;    (prn nums)
+    (reduce +
+      (map /
+        (sort > (numbers hand))
+        (iterate (partial * 100) 1.)))))
 
-(high-card [[1 \H] [14 \C] [2 \D] [4 \S] [3 \S]])
-(high-card [[1 \H] [13 \C] [2 \D] [4 \S] [3 \S]])
+; (high-card [[1 \H] [14 \C] [2 \D] [4 \S] [3 \S]])
+; (high-card [[1 \H] [13 \C] [2 \D] [4 \S] [3 \S]])
+; (high-card [[7 \H] [2 \C] [3 \D] [4 \S] [5 \S]])
 
 ;;
 ;; score of a hand
@@ -280,37 +255,34 @@
   (power 10 n))
 
 (defn score [hand]
- (cond
-  (royal-straight-flush? hand)
-  (* (pow 18) (max-number hand))
+  (if-let [p (royal-straight-flush hand)]
+    (* (pow 18) p)
+    (if-let [p (straight-flush hand)]
+      (* (pow 16) p)
+      (if-let [p (four-cards hand)]
+        (* (pow 14) p)
+        (if-let [p (full-house hand)]
+          (* (pow 12) p)
+          (if-let [p (flush hand)]
+            (* (pow 10) p)
+            (if-let [p (straight hand)]
+              (* (pow 8) p)
+              (if-let [p(three-cards hand)]
+                (* (pow 6) p)
+                (if-let [p (two-pairs hand)]
+                  (* (pow 4) p)
+                  (if-let [p (one-pair hand)]
+                     (* (pow 2) p)
+                     (high-card hand)))))))))))
 
-  (straight-flush? hand)
-  (* (pow 16) (max-number hand))
+; (score [[1 \H] [14 \C] [2 \D] [4 \S] [3 \S]])
+; (score [[7 \H] [2 \C] [3 \D] [4 \S] [5 \S]])
 
-  (four-cards? hand)
-  (* (pow 14) (four-cards hand))
 
-  (full-house? hand)
-  (* (pow 12) (full-house hand))
-
-  (flush? hand)
-  (* (pow 10) (max-number hand))
-
-  (straight? hand)
-  (* (pow 8) (max-number hand))
-
-  (three-cards? hand)
-  (* (pow 6) (three-cards hand))
-
-  (two-pairs? hand)
-  (* (pow 4) (two-pairs hand))
-
-  (one-pair? hand)
-  (* (pow 2) (one-pair hand))
-
-  :else (high-card hand)))
-
-(time (count
-        (filter true?
-          (for [[p1 p2] pokers]
-             (> (score p1) (score p2))))))
+; (time
+;   (count
+;     (filter true?
+;       (for [[p1 p2] pokers]
+;          (> (score p1) (score p2))))))
+; "Elapsed time: 132.758154 msecs"
+; 376
