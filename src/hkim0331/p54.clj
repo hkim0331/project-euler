@@ -1,5 +1,6 @@
 (ns hkim0331.p54
-  (:require [clojure.string :as str]))
+  (:require [clojure.string :as str]
+            [hkim0331.misc :refer [power]]))
 
 ; In the card game poker, a hand consists of five cards and are ranked, from lowest to highest, in the following way:
 
@@ -74,6 +75,12 @@
 (defn numbers [hand]
   (map first hand))
 
+(defn max-number [hand]
+  (apply max (numbers hand)))
+
+(defn max2-number [hand])
+  (sort (numbers hand))
+
 
 (defn suits [hand]
   (map second hand))
@@ -89,9 +96,14 @@
 (defn straight? [hand]
   (every? (partial = 1)
     (map #(- (second %) (first %))
-      (partition 2 1 (sort (map first hand))))))
+      (partition 2 1 (sort (numbers hand))))))
+
+(defn straight [hand]
+  (apply min (numbers hand)))
 
 (straight? [[1 \a] [2 \a] [3 \b] [4 \c] [5 \d]])
+(straight  [[1 \a] [2 \a] [3 \b] [4 \c] [5 \d]])
+
 
 ;;
 ;; flush
@@ -100,16 +112,25 @@
 (defn flush? [hand]
  (apply = (map second hand)))
 
-(flush? (ffirst pokers))
+(defn flush [hand]
+ (apply max (numbers hand)))
+
+(flush? [[1 \a] [3 \a] [4 \a] [9 \a]])
+(flush  [[1 \a] [3 \a] [4 \a] [9 \a]])
 
 ;;
 ;; straight flush
 ;;
+
 (defn straight-flush? [hand]
   (and (straight? hand)
        (flush? hand)))
 
+(defn straight-flush [hand]
+ (apply max (numbers hand)))
+
 (straight-flush? [[9 \H] [10 \H] [11 \H]  [12 \H] [8 \H]])
+(straight-flush  [[9 \H] [10 \H] [11 \H]  [12 \H] [8 \H]])
 
 ;;
 ;;royal-straight-flush
@@ -118,8 +139,12 @@
  (and (straight-flush? hand)
       (= 10 (apply min (map first hand)))))
 
+(defn royal-straight-flush [hand]
+  (apply max (numbers hand)))
+
 (royal-straight-flush? [[12 \H] [10 \H] [11 \H]  [13 \H] [14 \H]])
 (royal-straight-flush? [[12 \H] [10 \H] [11 \H]  [13 \C] [14 \H]])
+(royal-straight-flush  [[12 \H] [10 \H] [11 \H]  [13 \H] [14 \H]])
 
 ;;
 ;; four-cards
@@ -185,15 +210,36 @@
 ;; score of a hand
 ;;
 
+(defn pow [n]
+  (power 10 n))
+
 (defn score [hand]
  (cond
   (royal-straight-flush? hand) 
-  (straight-flush? hand)
-  (four-cards? hand)
+  (* (pow 9) (royal-straight-flush hand))
+  
+  (straight-flush? hand) 
+  (* (pow 8) (straight-flush hand))
+  
+  (four-cards? hand) 
+  (* (pow 7) (four-cards hand))
+
   (full-house? hand)
-  (flush? hand)
+  (* (pow 6) (full-house hand))
+  
+  (flush? hand) 
+  (* (pow 5) (flush hand))
+
   (straight? hand)
-  (three-cards? hand)
-  (two-pairs? hand) (* )
-  (one-pair? hand) (* 10 (one-pair hand))
+  (* (pow 4) (straight hand))
+
+  (three-cards? hand) 
+  (* (pow 3) (three-cards hand))
+
+  (two-pairs? hand)
+  (* (pow 2) (two-pair hand))
+
+  (one-pair? hand)
+  (* (pow 1) (one-pair hand))
+
   :else (high-card hands)))
