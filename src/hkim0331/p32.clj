@@ -9,12 +9,11 @@
 ; HINT: Some products can be obtained in more than one
 ;  way so be sure to only include it once in your sum.
 
-
 ;; あとは積が9桁になる整数 x y のペアの範囲だが。
 ;; ヒントをどうするか？
 
 ; x y とその積で pandigital となるか？
-(defn pandigital? [[x y]]
+(defn pandigital-product? [[x y]]
   (let [sx (seq (str x))
         sy (seq (str y))
         sz (seq (str (* x y)))
@@ -33,16 +32,16 @@
 ; なので 2桁x3桁か、1桁x4桁を調べる。
 
 (defn p32 []
-  (let [l1 (filter pandigital?
+  (let [l1 (filter pandigital-product?
               (for [x (range 10 100) y (range 100 1000)]
                 [x y]))
-        l2 (filter pandigital?
+        l2 (filter pandigital-product?
               (for [x (range 1 10) y (range 1000 10000)]
                 [x y]))]
     (concat l1 l2)))
 
 ; (time
-; 		(reduce +
-; 				(into #{} (map (fn ([[a b]] (* a b))) (p32)))))
+;     (reduce +
+;         (into #{} (map (fn ([[a b]] (* a b))) (p32)))))
 ; "Elapsed time: 441.294927 msecs"
 ; 45228
