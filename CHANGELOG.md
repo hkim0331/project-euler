@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file. This change
 
 ## [Unreleased]
 
+## 0.12.0 - 2020-08-20
+* problem 55.
 
 ## [0.11.1] - 2020-08-19
 * problem 51.
