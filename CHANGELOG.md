@@ -2,8 +2,13 @@
 All notable changes to this project will be documented in this file. This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
-* problem 41, 42, 43.
 
+
+## [0.11.1] - 2020-08-19
+* problem 51.
+
+* problem 54.
+* problem 42, 43, 44, 45, 46 ,47, 48, 49, 50.
 
 ## 0.11.0 - 2020-08-09
 * problem 41.
