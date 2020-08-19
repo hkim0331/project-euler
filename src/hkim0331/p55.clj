@@ -14,4 +14,37 @@
 ; How many Lychrel numbers are there below ten-thousand?
 ; NOTE: Wording was modified slightly on 24 April 2007 to emphasise the theoretical nature of Lychrel numbers.
 
-(combo/count-combinations )
+(defn str->int-aux [s n]
+	(if (empty? s)
+		n
+		(str->int-aux (subs s 1)
+		              (+ (* 10 n) (Integer. (subs s 0 1))))))
+
+(defn str->int [s]
+	(str->int-aux s 0N))
+
+(defn rev [s]
+	(apply str (reverse s)))
+
+(defn palindrome? [s]
+ 	(= s (rev s)))
+
+(defn iter [s]
+  (str (+' (str->int s) (str->int (rev s)))))
+
+(defn lychel-aux [s c]
+  (cond
+   	(zero? c) s
+		(palindrome? s) false
+		:else	(lychel-aux (iter s) (- c 1))))
+
+;; 最初の数それ自身が palindrome である数を lychel 数でないと
+;; 誤認しないために、一度回し、(- c 1) する。
+
+(defn lychel?
+	([n] (lychel? n 50))
+	([n c] (lychel-aux (iter (str n)) (- c 1))))
+
+; (time (count (filter #(lychel? % 50) (range 10000))))
+; "Elapsed time: 321.486518 msecs"
+; 249
