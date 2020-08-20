@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file. This change
 ## [Unreleased]
 
 ## 0.12.1 - 2020-08-20
+* problem 58.
+  問題の題意を読み違え。memoize の使い方違った。
 * problem 57.
 * problem 56.
 
