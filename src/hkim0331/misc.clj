@@ -73,3 +73,5 @@
   (let [p (seq (str n))
         d (take (count p) (seq (apply str (range 1 10))))]
    (= (set p) (set d))))
+
+;;
