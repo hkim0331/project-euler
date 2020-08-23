@@ -11,3 +11,4 @@ checkouts
 .hg/
 .rebel_readline_history
 .tags*
+a.out
