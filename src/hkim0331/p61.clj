@@ -59,17 +59,41 @@
               (drop-while #(< % 1000) (map f (iterate inc 1)))))))
 
 
-(def p3s (rng p3))
-(def p4s (rng p4))
-(def p5s (rng p5))
-(def p6s (rng p6))
-(def p7s (rng p7))
-(def p8s (rng p8))
+(def gons [(rng p3) (rng p4) (rng p5) (rng p6) (rng p7) (rng p8)])
+(def orders (combo/permutations [1 2 3 4 5]))
 
-;; 3, 4, 5, 6, 7, 8 の順に出てくるってわけではない！まじか。
+(def not-empty? (complement empty?))
+;(not-empty? [])
 
-;; まともにはループできない。
-; (* 80 53 47 44 40 30)
-; 10521984000
+(defn dfs
 
-; under construction
+  "深さ優先探索。LISP 族は意識して書かないと幅優先探索になる。
+   pi, pj, pk... の順に p60 をみたす [n m] をつないでいく。
+   i, j, k... は [1 2 3 4 5] の順列を与える。
+   答えを一つ見つけたら終わる。"
+
+  [s order ret]
+  (if (= 6 (count ret))
+    (if (= (ffirst ret) (second (last ret)))
+      ret
+      nil)
+    (when-let [founds (and (not-empty? order)
+                           (filter #(= (second s) (first %))
+                                   (gons (first order))))]
+      (filter not-empty?
+              (for [f founds]
+                (dfs f (rest order) (conj ret f)))))))
+
+(first
+  (filter not-empty?
+    (for [f (first gons) o orders]
+      (dfs f o [f]))))
+
+; (time
+;  (first
+;    (filter not-empty?
+;      (for [f (first gons) o orders]
+;           (dfs f o [f])))))
+; "Elapsed time: 179.300439 msecs"
+; ((((([[82 56] [56 25] [25 12] [12 81] [81 28] [28 82]])))))
+; (+ 8256 5625 2512 1281 8128 2882)

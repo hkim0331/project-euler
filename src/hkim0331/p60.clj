@@ -10,7 +10,8 @@
 ;; 700 以下の素数からの 4 ペアで p60 を満足するペアが見つかるかどうかをテストする。
 ;; 見つかるとすればそれは #{3 7 109 673} のはずだ。
 
-(defn cc
+(defn cc?
+  "引数の [n1 n2] から作った整数 n1n2, n2n1 がともに素数か?"
   [[n1 n2]]
   (let [s1 (str n1)
         s2 (str n2)]
@@ -19,14 +20,12 @@
 
 (defn p60?
   [numbers]
-  (every? true? (map cc (combo/combinations numbers 2))))
+  (every? cc? (combo/combinations numbers 2)))
 
 ;(p60? [3 7 109 673])
 ;true
 
 (def primes-700 (take-while #(< % 700) primes))
-
-;(take 20 primes-700)
 
 ; (time
 ;  (first
@@ -37,6 +36,8 @@
 
 ; 試しに、
 (def primes-10000 (take-while #(< % 10000) primes))
+(count primes-10000)
+;1229
 
 ; (time
 ;   (first
@@ -46,4 +47,38 @@
 ; 何か根本的に違うアルゴリズムを考えないと。
 ; C で書いてみるか。
 
+;関数一発でゴン方式をやめてみる。
+
+(def pairs (combo/combinations primes-10000 2))
+
+(count pairs)
+;754606
+
+;片方に2があったら素数にならない
+(def pairs-2 (remove #(or (= 2 (first %)) (= 2 (second %))) pairs))
+
+;片方に5があったら素数にならない
+(def pairs-25 (remove #(or (= 5 (first %)) (= 5 (second %))) pairs-2))
+
+;足して3の倍数は素数にならない
+(def pairs-253 (remove #(zero? (mod (+ (first %) (second %)) 3)) pairs-25))
+
+(count pairs-253)
+;376386
+;半分には減ったがまだまだ。
+
+;cc? でフィルタ。
+(def pairs-253-cc (filter cc? pairs-253))
+(count pairs-253-cc)
+;18176
+
+;二つを選んで、ジョインし、3の倍数になるものを消した上で cc? でフィルタ。
+(def pairs-253-cc-4-3-cc
+  (filter cc?
+    (remove #(zero? (mod (+ (first %) (second %)) 3))
+            (map (partial apply into)
+                 (combo/combinations pairs-253-cc 2)))))
+
+;これやっぱりダメ。C[18176,2] が爆弾だ。
+;深さ優先サーチで最初の解を探そう。
 
