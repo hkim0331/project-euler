@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file. This change
 
 ## [Unreleased]
 
+## - 2020-08-24
+* problem 97.
+* problem 92.
+
 ## - 2020-08-22
 * problem 60, 61, 62.
 * make github repository public since solutions under #100 is allowed to

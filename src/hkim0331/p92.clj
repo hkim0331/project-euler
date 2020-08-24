@@ -12,51 +12,47 @@
 ; How many starting numbers below ten million will arrive at 89?
 
 
-; misc?
 (defn c->i
-  "coarse char to i"
+  "coarse char to integer"
   [c]
   (- (int c) (int \0)))
 
-(defn h89-new?
- "if n arrives 89, return true"
+(defn p92-once
+  "2回使うので、関数にしておく"
+  [n]
+  (reduce + (map #(* % %) (map c->i (seq (str n))))))
+
+(defn p92-aux
+ "引数 n が 1 または 89 になるまで p92 の操作を繰り返す。"
  [n]
-; (prn n)
- (cond
-  (= 89 n) true
-  (= 1 n) false
-  :else
-  (let [digits (map c->i (seq (str n)))]
-    (recur (reduce + (map #(* % %) digits))))))
+ (loop [n n]
+   (let [m (p92-once n)]
+;    (prn m)
+    (case m
+     1 0
+     89 1
+     (recur m)))))
 
-;(h89-new? 100)
+; (p92-aux 44)
+; 0
+; (p92-aux 85)
+; 1
 
-(defn nc
- "repeat adding the square of the digits
-  until it has been seen before."
- [n]
- (cond
-   (h89 n) true
-   (h01 n) false
-   (h89-new? n) (do
-                  (assoc! h89 n true)
-                  true)
-   :else (do
-           (assoc! h01 n true)
-           false)))
+;;9,999,999-> 81+81+81+81+81+81=567 が変換後最大数。
 
-(def h89 (transient {}))
-(def h01 (transient {}))
+(def p92-memo
+  (memoize (fn [n] (p92-aux n))))
 
-(defn p92 [n]
-		(let [c 0]
-		  (loop [i 1]
-						(when (< i n)
-				    (when (nc i)
-			    		(inc c)))
-				(recur (inc i)))
-    [c (count h89) (count h01)]))
+;; メモする。
+(map p92-memo (range 1 568))
 
-(time (p92 1000))
+;;行ってみよう。
+(defn p92
+  "n までのうちに 89 で止まるものはいくつか？"
+  [n]
+  (reduce +
+    (map #(p92-memo (p92-once %)) (range 1 n))))
 
-
+; (time (p92 10000000))
+; "Elapsed time: 21076.890513 msecs"
+; 8581146
