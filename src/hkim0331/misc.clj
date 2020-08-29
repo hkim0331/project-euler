@@ -34,7 +34,7 @@
 
 ;;; prime factors
 
-(defn pf-aux [n d ret]
+(defn- pf-aux [n d ret]
     (cond
       (= n 1) ret
       (zero? (mod n d))
@@ -43,6 +43,7 @@
       (recur n (+ 1 d) ret)))
 
 (defn prime-factors [n]
+  "整数 n の素因数分解"
   (if (= n 1)
    1
    (doall (pf-aux n 2 []))))
