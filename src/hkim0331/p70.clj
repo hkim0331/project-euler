@@ -17,42 +17,61 @@
 ;; 二つの素数 p,q の掛け算になるような n が p70 の解だろう。
 
 ;; これをどうプログラムするか？
-;; 0<p<q<r<sの時、全部素数、
+;; 0<p<q<r<sの時、（p、q、r、sは全部素数）、
 ;; pq/phi(p)phi(q) > rs/phi(r)phi(s)
+
+;; 関数 phi() は phi(p*q) = phi(p)*phi(q) の性質を持つ。
 
 ;;1,000,000< pq < 10,000,000 のうち、条件を満たす最も大きな pq を探す、でいいか？
 
 ;(Math/sqrt 10000000)
 ;3162.2776601683795
 
+;; この範囲がダメ？
+;; 5*2 = 10ってことか？
+
+;; ベクタにしてランダムアクセスを容易にする。
 (def pq
- (take-while #(< % 3126)
-   (drop-while #(< % 1000) primes)))
+ (vec
+   (take-while #(< % 5000)
+     (drop-while #(< % 1000) primes))))
 
-(count pq)
-(take 10 pq)
+;(pq 100)
 
-; 大きな組みがいいんだから、ひっくり返しておく。
-(def pq-rev (reverse pq))
-(take 10 pq-rev)
+(def c (count pq))
+; 501
+; 1000<p<5000を満たす素数は500個程度。このくらいなら全探索できる。
 
+; 第一、第二バージョン、、、は set で書いていた。
+; (permute=? 111 1) => true がまずいんだろ。
+; sort に直す。
 (defn permute=?
   "n, m は数字の並びだけが違う数か？"
   [n m]
-  (= (set (seq (str n)))
-     (set (seq (str n)))))
-;(permute=? 123 321)
+  (= (sort (seq (str n)))
+     (sort (seq (str m)))))
 
+; (permute=? 123 321)
+; (permute=? 1233 123)
+
+; 全探索。ダサい。他にどんな探索が？
 (defn p70
  []
- (first
-  (drop-while nil?
-    (for [p pq-rev q pq-rev]
-      (when (permute=? (* p q) (* (- p 1) (- q 1)))
-        [(* p q) p q])))))
+ (reduce min
+   (remove nil?
+     (for [i (range c) j (range 1 i)]
+       (let [p (pq i)
+             q (pq j)
+             n (* p q)]
+         (when (and (< n 10000000)
+                    (permute=? n (* (- p 1) (- q 1))))
+           (/ n (* (- p 1) (- q 1)))))))))
+
+; (time (p70))
+; "Elapsed time: 234.56929 msecs"
+; 8319823/8313928
 
 ; (time (p70))
 ; "Elapsed time: 0.579608 msecs"
 ; 9840769
 ; 赤ペケ。最初に見つかる数が最大とは限らないか？
-

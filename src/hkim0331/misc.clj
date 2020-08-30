@@ -32,26 +32,40 @@
           (even? n) false
           :else (prime?-aux n 3)))
 
-;;; prime factors
+;;; prime factors.
+;;; map で呼ぶと返ってこない。
 
 (defn- pf-aux [n d ret]
     (cond
       (= n 1) ret
-      (zero? (mod n d))
-      (recur (/ n d) d (conj ret d))
-      :else
-      (recur n (+ 1 d) ret)))
+      (zero? (mod n d)) (recur (/ n d) d (conj ret d))
+      :else (recur n (+ 1 d) ret)))
 
 (defn prime-factors [n]
   "整数 n の素因数分解"
   (if (= n 1)
-   1
-   (doall (pf-aux n 2 []))))
+    1
+    (doall(pf-aux n 2 []))))
 
 ;;other definition、 これは遅いか。
-(defn prime-factors-2 [n]
-  (filter #(zero? (mod n %))
-     (take-while #(< % n) primes)))
+; (defn prime-factors-2 [n]
+;   (filter #(zero? (mod n %))
+;      (take-while #(< % n) primes)))
+
+
+
+(defn phi
+ "Euler's totient (phi) function"
+ [n]
+ (case n
+  1 1
+  (reduce * n
+    (map #(- 1 (/ 1 %))
+         (->> n
+              prime-factors
+              (group-by identity)
+              keys)))))
+
 
 ;; power, power-mod
 
