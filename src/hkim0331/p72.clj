@@ -1,5 +1,5 @@
 (ns hkim0331.p72
-  (:require [hkim0331.misc :refer [prime-factors]]))
+  (:require [hkim0331.misc :refer [prime-factors factor-integer]]))
 
 ; Consider the fraction, n/d, where n and d are positive integers. If n<d and HCF(n,d)=1, it is called a reduced proper fraction.
 ; If we list the set of reduced proper fractions for d ≤ 8 in ascending order of size, we get:
@@ -53,6 +53,32 @@
 ; 3039650753N
 ;;まだ最適化が必要。
 
+
+;; clojure らしく factor-integer を定義、
+;; 単独では小さい数字(1000~4000)では
+;; prime-factors よりも20倍以上高速という結果は
+;; 得られた。
+
+;(time (prime-factors 12345678))
+;"Elapsed time: 0.165514 msecs"
+;(time (count (map prime-factors  (range 10000 40000))))
+;"Elapsed time: 1161.236942 msecs"
+;(factor-integer 12345678)
+;(time (count (map factor-integer (range 10000 40000))))
+;"Elapsed time: 3.364862 msecs"
+
+(defn phi [n]
+  (if (= n 1)
+    1
+    (reduce * n (map #(- 1 (/ 1 %))
+                    (factor-integer n)))))
+
+;; しかし、本番の1/10 のサイズで、
+; (time (p72 100000))
+; "Elapsed time: 88874.477775 msecs"
+; 3039660345N
+;; 逆に遅くなってしまった。
+
 ;; m,n が互いに素の時、phi(mn)=phi(m)phi(n)を使おう。
 ;; n が偶数の時に最適化の余地がある。
 
@@ -81,18 +107,4 @@
 ;(time (p72 100000))
 ; "Elapsed time: 25240.824226 msecs"
 ; 3039650753N
-; ほとんど効かない。
-
-;; 素因数分解を速くする（できる？）
-
-(def pfm
-  (memioze
-   (fn [n]
-     (cond
-       (prime? n) [n]
-       (even? n) (concat (pfm (/ n 2)) 2)
-       :else (prime-factors n)))))
-
-(for [n (range 2 10)]
-  (pfm n))
-
+; ほとんど効かない。1割くらい？こんなんじゃダメ。
