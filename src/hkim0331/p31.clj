@@ -31,21 +31,21 @@
 
 ; 無理やり、解を表示する。
 ; atom, swap!, list を使うあたり、方法的にはイケてない。
-(defn changes-aux [amount coins ret]
-  (cond
-    (empty? coins) []
-    (< amount 0) []
-    (= 0 amount) (swap! answer conj ret)
-    :else (list
-            (changes-aux (- amount (first coins))
-                         coins
-                         (conj ret (first coins)))
-            (changes-aux amount (rest coins) ret))))
+; (defn changes-aux [amount coins ret]
+;   (cond
+;     (empty? coins) []
+;     (< amount 0) []
+;     (= 0 amount) (swap! answer conj ret)
+;     :else (list
+;             (changes-aux (- amount (first coins))
+;                          coins
+;                          (conj ret (first coins)))
+;             (changes-aux amount (rest coins) ret))))
 
-(defn p31-coins [amount coins]
-  (changes-aux amount coins [])
-  @answer)
+; (defn p31-coins [amount coins]
+;   (changes-aux amount coins [])
+;   @answer)
 
-;; やめとこう。
-; (def answer (atom []))
-; (p31-coins 80 coins)
+; ;; やめとこう。
+; ; (def answer (atom []))
+; ; (p31-coins 80 coins)
