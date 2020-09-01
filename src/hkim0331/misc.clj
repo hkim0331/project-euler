@@ -22,35 +22,83 @@
 
 (defn- prime?-aux [n m]
   (cond
-      (< n (* m m)) true
       (zero? (rem n m)) false
+      (< n (* m m)) true
       :else (recur n (+ m 2))))
 
 (defn prime? [n]
-    (cond
-          (< n 3) (= n 2)
-          (even? n) false
-          :else (prime?-aux n 3)))
+  (cond
+     (< n 3) (= n 2)
+     (even? n) false
+     :else (prime?-aux n 3)))
 
-;;; prime factors
+; slow?
+; (defn prime2? [n]
+;   (some #(zero? (rem n %))
+;         (take-while #(<= (* % %) n) primes)))
 
-(defn pf-aux [n d ret]
+;;
+;; prime factors
+;;
+
+(defn- pf-aux [n d ret]
     (cond
       (= n 1) ret
-      (zero? (mod n d))
-      (recur (/ n d) d (conj ret d))
-      :else
-      (recur n (+ 1 d) ret)))
+      (zero? (rem n d)) (recur (/ n d) d (conj ret d))
+      :else (recur n (+ 2 d) ret)))
 
-(defn prime-factors [n]
-  (if (= n 1)
-   1
-   (doall (pf-aux n 2 []))))
+; revised 2020-08-30
+(defn prime-factors
+  "整数 n の素因数分解"
+  [n]
+  (if(< n 2)
+    [n]
+    (loop [n n ini []]
+      (if (even? n)
+        (recur (/ n 2) (conj ini 2))
+        (pf-aux n 3 ini)))))
+
+;(time (count (map prime-factors (range 1000 5000))))
 
 ;;other definition、 これは遅いか。
-(defn prime-factors-2 [n]
-  (filter #(zero? (mod n %))
-     (take-while #(< % n) primes)))
+; (defn prime-factors-2 [n]
+;   (filter #(zero? (mod n %))
+;      (take-while #(< % n) primes)))
+
+(defn factor-integer
+  [n]
+  (filter #(zero? (rem n %)) (take-while #(< % n) primes)))
+
+;(time (prime-factors 12345678))
+;"Elapsed time: 0.165514 msecs"
+
+;(time (count (map prime-factors  (range 10000 40000))))
+;"Elapsed time: 1161.236942 msecs"
+
+;(factor-integer 12345678)
+;(time (count (map factor-integer (range 10000 40000))))
+;"Elapsed time: 3.364862 msecs"
+
+;; (defn phi
+;;  "Euler's totient (phi) function"
+;;  [n]
+;;  (case n
+;;   1 1
+;;   (reduce * n
+;;     (map #(- 1 (/ 1 %))
+;;          (->> n
+;;               prime-factors
+;;               (group-by identity)
+;;               keys)))))
+
+;rewrite phi() with factor-integer
+(defn phi [n]
+  (if (= n 1)
+    1
+    (reduce * n (map #(- 1 (/ 1 %)) (factor-integer n)))))
+
+;(map phi (range 1 10))
+
 
 ;; power, power-mod
 
