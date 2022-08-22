@@ -1,5 +1,7 @@
 (ns hkim0331.p22
-  (:require [clojure.string :as str]))
+  (:require
+    [clojure.string :as str]))
+
 
 ;; ダブルクオートをはぎ取り、
 ;; コンマでスプリット
@@ -11,15 +13,21 @@
       (str/split #",")
       (sort)))
 
-(defn- value [c]
+
+(defn- value
+  [c]
   (+ 1 (- (int c) (int \A))))
 
-(defn worth [word]
+
+(defn worth
+  [word]
   (reduce + (map value (seq word))))
 
-;(= 53 (worth "COLIN"))
 
-(defn p22 [names]
+;; (= 53 (worth "COLIN"))
+
+(defn p22
+  [names]
   (map
     (fn [v] (* (v 0) (v 1)))
     (map-indexed
@@ -27,6 +35,7 @@
       ;; インデックスを一つずらす。
       (cons "DUMMY" names))))
 
-; (time (reduce + (p22 names)))
-; "Elapsed time: 29.890069 msecs"
-; 871198282
+
+;; (time (reduce + (p22 names)))
+;; "Elapsed time: 29.890069 msecs"
+;; 871198282
