@@ -1,24 +1,34 @@
 (ns hkim0331.p10-fermat
-  (:require [hkim0331.p7 :refer [prime?]]))
+  (:require
+    [hkim0331.p7 :refer [prime?]]))
 
-(defn sq [n]
+
+(defn sq
+  [n]
   (* n n))
 
-(defn power [b e]
+
+(defn power
+  [b e]
   (cond
     (zero? e) 1N
     (even? e) (sq (power b (/ e 2)))
     :else (* b (power b (- e 1)))))
 
-(defn power-mod [b e n]
+
+(defn power-mod
+  [b e n]
   (cond
     (zero? e) 1N
     (even? e) (rem (sq (power-mod b (/ e 2) n)) n)
     :else (rem (* (rem b n)
                   (power-mod b (- e 1) n)) n)))
 
-(defn pprime? [n]
- (= 1 (power-mod 2 (- n 1) n)))
+
+(defn pprime?
+  [n]
+  (= 1 (power-mod 2 (- n 1) n)))
+
 
 (pprime? 7)
 (pprime? 11)

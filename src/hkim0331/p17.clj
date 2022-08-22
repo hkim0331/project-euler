@@ -1,13 +1,15 @@
 (ns hkim0331.p17
-  (:require [hkim0331.p16 :refer [c->i]]
-            [clojure.string :as str]))
+  (:require
+    [clojure.string :as str]
+    [hkim0331.p16 :refer [c->i]]))
 
-; If the numbers 1 to 5 are written out in words: one, two,
-; three, four, five, then there are 3 + 3 + 5 + 4 + 4 = 19
-; letters used in total.
 
-; If all the numbers from 1 to 1000 (one thousand) inclusive
-; were written out in words, how many letters would be used?
+;; If the numbers 1 to 5 are written out in words: one, two,
+;; three, four, five, then there are 3 + 3 + 5 + 4 + 4 = 19
+;; letters used in total.
+
+;; If all the numbers from 1 to 1000 (one thousand) inclusive
+;; were written out in words, how many letters would be used?
 
 (def word
   {1 "one"
@@ -47,10 +49,10 @@
 
   ([d1 d0]
    (if (= d1 1)
-       (word (+ (* d1 10) d0))
-       (str (word (* d1 10))
-            " "
-            (word d0))))
+     (word (+ (* d1 10) d0))
+     (str (word (* d1 10))
+          " "
+          (word d0))))
   ([d2 d1 d0]
    (if (and (zero? d1) (zero? d0))
      (str (word d2)
@@ -64,8 +66,11 @@
   ([d3 d2 d1 d0]
    (word 1000)))
 
-(defn in-word [n]
-   (apply aux (map c->i (-> n str seq))))
+
+(defn in-word
+  [n]
+  (apply aux (map c->i (-> n str seq))))
+
 
 (defn p17-aux
   ([n m]
@@ -73,8 +78,9 @@
   ([n]
    (p17-aux 1 n)))
 
-; (time
-;  (count
-;   (str/replace (apply str (p17-aux 1000)) #"\s" "")))
-; "Elapsed time: 12.098765 msecs"
-; 21124
+
+;; (time
+;;  (count
+;;   (str/replace (apply str (p17-aux 1000)) #"\s" "")))
+;; "Elapsed time: 12.098765 msecs"
+;; 21124

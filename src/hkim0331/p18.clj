@@ -1,14 +1,17 @@
 (ns hkim0331.p18
-  (:require [clojure.string :refer [split]]))
+  (:require
+    [clojure.string :refer [split]]))
+
 
 (def test-triangle
- "3
+  "3
   7 4
   2 4 6
   8 5 9 3")
 
+
 (def p18-triangle
- "75
+  "75
   95 64
   17 47 82
   18 35 87 10
@@ -24,13 +27,18 @@
   63 66 04 68 89 53 67 30 73 16 69 87 40 31
   04 62 98 27 23 09 70 98 73 93 38 53 60 04 23")
 
-(defn- integers [v]
+
+(defn- integers
+  [v]
   (map #(Integer. %) v))
 
-(defn to-ints [tri]
+
+(defn to-ints
+  [tri]
   (->> (split tri #"\n")
        (map #(re-seq #"\d+" %))
        (map integers)))
+
 
 (def q-test (to-ints test-triangle))
 
@@ -40,25 +48,30 @@
 (def rrest (comp rest rest))
 (def fsecond (comp first second))
 
-(defn- p18-aux [a]
+
+(defn- p18-aux
+  [a]
   (cond
     (empty? a) 0
     (empty? (second a)) (ffirst a)
     (empty? (third a)) (+ (apply max (first a)) (fsecond a))
     :else
-      (let [f (map #(apply max %) (partition 2 1 (first a)))
-            s (second a)]
-        (recur (cons (map + f s) (rrest a))))))
+    (let [f (map #(apply max %) (partition 2 1 (first a)))
+          s (second a)]
+      (recur (cons (map + f s) (rrest a))))))
 
-(defn p18 [tri]
+
+(defn p18
+  [tri]
   (p18-aux (reverse tri)))
 
-; (p18 [])
-; (p18 [[1]])
-; (p18 [[1] [3 4]])
-; (p18 q-test)
 
-; (time (p18 q18)
-;  "Elapsed time: 0.498027 msecs")
-; 1074
+;; (p18 [])
+;; (p18 [[1]])
+;; (p18 [[1] [3 4]])
+;; (p18 q-test)
+
+;; (time (p18 q18)
+;;  "Elapsed time: 0.498027 msecs")
+;; 1074
 
